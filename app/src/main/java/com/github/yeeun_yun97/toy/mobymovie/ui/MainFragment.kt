@@ -17,14 +17,13 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
     override fun onCreateView() {
         binding.viewModel = viewModel
         initRecyclerView()
-
         binding.searchBtnImageView.setOnClickListener { searchStart() }
         binding.historyBtnImageView.setOnClickListener { navigateToHistory() }
     }
 
     override fun onStart() {
         super.onStart()
-        searchStart()
+        refresh()
     }
 
     private fun initRecyclerView() {
@@ -41,6 +40,11 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
     }
 
     private fun searchStart() {
+        viewModel.saveKeywordToHistory()
+        viewModel.searchStart()
+    }
+
+    private fun refresh(){
         viewModel.searchStart()
     }
 

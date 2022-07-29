@@ -9,5 +9,18 @@
         android:id="@+id/mainFragment"
         tools:layout="@layout/fragment_main"
         android:name="com.github.yeeun_yun97.toy.mobymovie.ui.MainFragment"
-        android:label="mainFragment" />
+        android:label="mainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        tools:layout="@layout/fragment_history"
+        android:name="com.github.yeeun_yun97.toy.mobymovie.ui.HistoryFragment"
+        android:label="HistoryFragment" >
+        <action
+            android:id="@+id/action_historyFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 </navigation>

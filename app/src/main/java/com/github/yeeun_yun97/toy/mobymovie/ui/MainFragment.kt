@@ -1,5 +1,7 @@
 package com.github.yeeun_yun97.toy.mobymovie.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -35,7 +37,7 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
 
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(context)
-        val adapter = MovieRecyclerAdapter()
+        val adapter = MovieRecyclerAdapter(::openLink)
         viewModel.bindingKeyword.observe(viewLifecycleOwner) {
             /* 스크롤 시 계속 로드하는 기능을 넣고자 하는데,
             표시된 목록을 기준으로 계속 로드될 지,
@@ -91,6 +93,13 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
 
     private fun navigateToHistory() {
         findNavController().navigate(R.id.action_mainFragment_to_historyFragment)
+    }
+
+    private fun openLink(url: String) {
+        if (url.isNotEmpty()) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
     }
 
 

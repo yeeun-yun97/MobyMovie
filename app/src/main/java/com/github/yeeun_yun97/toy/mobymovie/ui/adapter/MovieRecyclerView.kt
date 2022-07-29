@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.github.yeeun_yun97.clone.ynmodule.ui.adapter.YnBaseAdapter
 import com.github.yeeun_yun97.clone.ynmodule.ui.adapter.YnBaseViewHolder
-import com.github.yeeun_yun97.toy.mobymovie.data.MovieData
+import com.github.yeeun_yun97.toy.mobymovie.data.model.MovieData
 import com.github.yeeun_yun97.toy.mobymovie.databinding.ItemMovieBinding
 
 class MovieRecyclerAdapter : YnBaseAdapter<MovieData, MovieViewHolder>() {

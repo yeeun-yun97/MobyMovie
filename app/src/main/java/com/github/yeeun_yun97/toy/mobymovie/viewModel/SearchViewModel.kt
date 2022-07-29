@@ -6,7 +6,6 @@ import com.github.yeeun_yun97.toy.mobymovie.data.model.History
 import com.github.yeeun_yun97.toy.mobymovie.data.model.MovieData
 import com.github.yeeun_yun97.toy.mobymovie.data.repository.HistoryRepository
 import com.github.yeeun_yun97.toy.mobymovie.data.repository.MovieRepository
-import kotlinx.coroutines.launch
 
 class SearchViewModel(application: Application) : AndroidViewModel(application) {
     private val _movieRepo = MovieRepository()
@@ -16,24 +15,20 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     val bindingSearchedList: LiveData<List<MovieData>> = _movieRepo.searchedList
     val historyList: LiveData<List<History>> = _historyRepo.historyList
 
-    fun saveKeywordToHistory() =
-        viewModelScope.launch {
-            val keyword = bindingKeyword.value
-            if (!keyword.isNullOrEmpty())
-                _historyRepo.insertHistory(keyword)
-        }
+    suspend fun saveKeywordToHistory() {
+        val keyword = bindingKeyword.value
+        if (!keyword.isNullOrEmpty())
+            _historyRepo.insertHistory(keyword)
+    }
 
-    fun searchStart() =
-        viewModelScope.launch {
-            val keyword = bindingKeyword.value
-            if (!keyword.isNullOrEmpty())
-                _movieRepo.searchByKeywordAndPage(keyword, 1)
-        }
+    suspend fun searchStart() :Int{
+        val keyword = bindingKeyword.value
+        if (!keyword.isNullOrEmpty())
+           return _movieRepo.searchByKeywordAndPage(keyword, 1)
+        return -1
+    }
 
-    fun loadMore() =
-        viewModelScope.launch {
-            _movieRepo.loadNextOfPrevSearch()
-        }
+    suspend fun loadMore() = _movieRepo.loadNextOfPrevSearch()
 
 
 }

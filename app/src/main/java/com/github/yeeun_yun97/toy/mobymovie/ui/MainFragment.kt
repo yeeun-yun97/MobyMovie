@@ -6,17 +6,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.yeeun_yun97.clone.ynmodule.ui.component.YnConfirmBaseDialogFragment
 import com.github.yeeun_yun97.clone.ynmodule.ui.fragment.DataBindingBasicFragment
 import com.github.yeeun_yun97.toy.mobymovie.R
 import com.github.yeeun_yun97.toy.mobymovie.databinding.FragmentMainBinding
 import com.github.yeeun_yun97.toy.mobymovie.ui.adapter.MovieRecyclerAdapter
 import com.github.yeeun_yun97.toy.mobymovie.viewModel.SearchViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
     private val viewModel: SearchViewModel by activityViewModels()
-
     private var loading = false
 
     override fun layoutId(): Int = R.layout.fragment_main
@@ -61,15 +62,29 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
         })
     }
 
+    private fun showInternetErrorDialog(result: Int) {
+        YnConfirmBaseDialogFragment(
+            "네트워크 실패 ($result)",
+            "데이터 로드에 실패하였습니다.",
+            null
+        ).show(childFragmentManager, "InternetError")
+    }
+
     private fun searchStart() {
-        viewModel.saveKeywordToHistory()
-        viewModel.searchStart()
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.saveKeywordToHistory()
+            val result = async { viewModel.searchStart() }.await()
+            if (result != 200 && result != -1)
+                showInternetErrorDialog(result)
+        }
     }
 
     private fun loadNext() {
         loading = true
         lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.loadMore().join()
+            val result = async { viewModel.loadMore() }.await()
+            if (result != 200 && result != -1)
+                showInternetErrorDialog(result)
             loading = false
         }
     }

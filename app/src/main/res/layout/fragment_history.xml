@@ -11,11 +11,10 @@
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:toolbarTitle="최근 검색 이력"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
-        </com.github.yeeun_yun97.clone.ynmodule.ui.component.CustomBasicToolbar>
+            app:layout_constraintTop_toTopOf="parent"
+            app:toolbarTitle="최근 검색 이력"></com.github.yeeun_yun97.clone.ynmodule.ui.component.CustomBasicToolbar>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/historyRecyclerView"
@@ -37,6 +36,35 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_end="20dp" />
+
+        <ImageView
+            android:id="@+id/emptyImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toTopOf="@+id/emptyTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/historyRecyclerView"
+            app:layout_constraintVertical_bias="0.35"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:srcCompat="@drawable/image_no_history" />
+
+        <TextView
+            android:id="@+id/emptyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="최근에 검색한 키워드가 아직 없어요."
+            app:layout_constraintBottom_toBottomOf="@+id/historyRecyclerView"
+            app:layout_constraintEnd_toEndOf="@+id/emptyImageView"
+            app:layout_constraintStart_toStartOf="@+id/emptyImageView"
+            app:layout_constraintTop_toBottomOf="@+id/emptyImageView" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/emptyGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="emptyImageView,emptyTextView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

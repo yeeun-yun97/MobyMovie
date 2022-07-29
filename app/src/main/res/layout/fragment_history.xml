@@ -18,6 +18,7 @@
         </com.github.yeeun_yun97.clone.ynmodule.ui.component.CustomBasicToolbar>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/historyRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"

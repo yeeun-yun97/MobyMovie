@@ -18,14 +18,21 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
     fun saveKeywordToHistory() =
         viewModelScope.launch {
-            val keyword = bindingKeyword.value ?: ""
-            _historyRepo.insertHistory(keyword)
+            val keyword = bindingKeyword.value
+            if (!keyword.isNullOrEmpty())
+                _historyRepo.insertHistory(keyword)
         }
 
     fun searchStart() =
         viewModelScope.launch {
-            val keyword = bindingKeyword.value ?: ""
-            _movieRepo.searchByKeywordAndPage(keyword, 1)
+            val keyword = bindingKeyword.value
+            if (!keyword.isNullOrEmpty())
+                _movieRepo.searchByKeywordAndPage(keyword, 1)
+        }
+
+    fun loadMore() =
+        viewModelScope.launch {
+            _movieRepo.loadNextOfPrevSearch()
         }
 
 

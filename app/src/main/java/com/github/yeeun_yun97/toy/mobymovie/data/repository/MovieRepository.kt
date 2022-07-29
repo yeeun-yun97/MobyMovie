@@ -1,10 +1,10 @@
 package com.github.yeeun_yun97.toy.mobymovie.data.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.github.yeeun_yun97.toy.mobymovie.data.model.MovieData
+import com.github.yeeun_yun97.toy.mobymovie.data.model.MovieList
 import com.github.yeeun_yun97.toy.mobymovie.data.model.NaverMovie
 import com.github.yeeun_yun97.toy.mobymovie.data.model.NaverSearchResponse
 import com.github.yeeun_yun97.toy.mobymovie.data.retrofit.NaverMovieService
@@ -12,42 +12,69 @@ import com.github.yeeun_yun97.toy.mobymovie.data.retrofit.NaverMovieService
 class MovieRepository {
     private val _service = NaverMovieService.getInstance()
 
-    private val _searchedRawList: MutableLiveData<NaverSearchResponse> = MutableLiveData()
+    private var _searchedResponse: MovieList? = null
+    private val _searchedRawList = MutableLiveData<MovieList>()
     val searchedList: LiveData<List<MovieData>>
         get() =
             Transformations.switchMap(_searchedRawList) {
-                val list = mutableListOf<MovieData>()
-                for (movie in it.items) {
-                    list.add(convertToMovieData(movie))
-                }
-                MutableLiveData(list)
+                MutableLiveData(it.items)
             }
 
-    private fun convertToMovieData(origin: NaverMovie): MovieData {
-        return MovieData(
-            movieDate = origin.pubDate,
-            movieScore = origin.userRating,
-            movieThumbnail = origin.image,
-            movieTitle = origin.title,
-            movieUrl = origin.link
+    private fun convertToMovieList(origin: NaverSearchResponse, keyword: String): MovieList {
+        return MovieList(
+            start = origin.start,
+            total = origin.total,
+            keyword = keyword,
+            items = convertToMovieDataList(origin.items)
+
         )
+    }
+
+    private fun convertToMovieDataList(origin: List<NaverMovie>): MutableList<MovieData> {
+        val list = mutableListOf<MovieData>()
+        for (movie in origin) {
+            list.add(
+                MovieData(
+                    movieDate = movie.pubDate,
+                    movieScore = movie.userRating,
+                    movieThumbnail = movie.image,
+                    movieTitle = movie.title,
+                    movieUrl = movie.link
+                )
+            )
+        }
+        return list
     }
 
 
     suspend fun searchByKeywordAndPage(keyword: String, page: Int): Int {
-        val response = _service.searchMovie(keyword,
-            page
-        )
+        val response = _service.searchMovie(keyword, page)
         if (response.isSuccessful) {
-//            YnConfirmBaseDialogFragment(
-//                "실패 (${response.code()})",
-//                "검색 결과를 받아오는 데 실패하였습니다.",
-//                null
-//            )
-            this._searchedRawList.postValue(response.body())
-            Log.d("불러옴", response.body().toString())
+            val data = convertToMovieList(response.body()!!, keyword)
+            updateResponse(data)
         }
-        else Log.d("에러", "${response.code()}, ${response.errorBody()?.string()}")
+        return response.code()
+    }
+
+    private fun updateResponse(data: MovieList) {
+        this._searchedResponse = data
+        this._searchedRawList.postValue(_searchedResponse)
+    }
+
+    suspend fun loadNextOfPrevSearch(): Int {
+        val prevData = _searchedResponse!!
+        val keyword = prevData.keyword
+        val start = prevData.start + 20
+
+        if (start > prevData.total) return -1
+
+        val response = _service.searchMovie(keyword, start)
+        if (response.isSuccessful) {
+            val data = convertToMovieDataList(response.body()!!.items)
+            prevData.items.addAll(data)
+            prevData.start = start
+            updateResponse(prevData)
+        }
         return response.code()
     }
 }

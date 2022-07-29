@@ -2,6 +2,7 @@ package com.github.yeeun_yun97.toy.mobymovie.ui
 
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.yeeun_yun97.clone.ynmodule.ui.fragment.DataBindingBasicFragment
@@ -9,6 +10,7 @@ import com.github.yeeun_yun97.toy.mobymovie.R
 import com.github.yeeun_yun97.toy.mobymovie.databinding.FragmentHistoryBinding
 import com.github.yeeun_yun97.toy.mobymovie.ui.adapter.HistoryRecyclerAdapter
 import com.github.yeeun_yun97.toy.mobymovie.viewModel.SearchViewModel
+import kotlinx.coroutines.launch
 
 class HistoryFragment : DataBindingBasicFragment<FragmentHistoryBinding>() {
     private val viewModel: SearchViewModel by activityViewModels()
@@ -29,7 +31,7 @@ class HistoryFragment : DataBindingBasicFragment<FragmentHistoryBinding>() {
         binding.historyRecyclerView.adapter = adapter
     }
 
-    private fun navigateAndSearchStart(keyword:String){
+    private fun navigateAndSearchStart(keyword: String) {
         viewModel.bindingKeyword.postValue(keyword)
         findNavController().navigate(R.id.action_historyFragment_to_mainFragment)
     }

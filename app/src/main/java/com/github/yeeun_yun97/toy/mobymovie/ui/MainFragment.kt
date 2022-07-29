@@ -22,6 +22,11 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
         binding.historyBtnImageView.setOnClickListener { navigateToHistory() }
     }
 
+    override fun onStart() {
+        super.onStart()
+        searchStart()
+    }
+
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(context)
         val adapter = MovieRecyclerAdapter()

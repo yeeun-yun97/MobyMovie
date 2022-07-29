@@ -31,7 +31,6 @@ class HistoryFragment : DataBindingBasicFragment<FragmentHistoryBinding>() {
 
     private fun navigateAndSearchStart(keyword:String){
         viewModel.bindingKeyword.postValue(keyword)
-        viewModel.searchStart()
         findNavController().navigate(R.id.action_historyFragment_to_mainFragment)
     }
 }

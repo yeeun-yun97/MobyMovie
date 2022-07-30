@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,9 +13,6 @@ import com.github.yeeun_yun97.toy.mobymovie.R
 import com.github.yeeun_yun97.toy.mobymovie.databinding.FragmentMainBinding
 import com.github.yeeun_yun97.toy.mobymovie.ui.adapter.recycler.MovieRecyclerAdapter
 import com.github.yeeun_yun97.toy.mobymovie.viewModel.SearchViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
     private val viewModel: SearchViewModel by activityViewModels()
@@ -74,22 +70,21 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
     }
 
     private fun searchStart() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.saveKeywordToHistory()
-            val result = async { viewModel.searchStart() }.await()
-            if (result != 200 && result != -1)
-                showInternetErrorDialog(result)
-        }
+        viewModel.saveKeywordToHistory()
+        viewModel.searchStart(::showInternetErrorDialog)
     }
 
     private fun loadNext() {
+        startLoading()
+        viewModel.loadMore(::showInternetErrorDialog, ::finishLoading)
+    }
+
+    private fun startLoading() {
         _loading = true
-        lifecycleScope.launch(Dispatchers.IO) {
-            val result = async { viewModel.loadMore() }.await()
-            if (result != 200 && result != -1)
-                showInternetErrorDialog(result)
-            _loading = false
-        }
+    }
+
+    private fun finishLoading() {
+        _loading = false
     }
 
     private fun navigateToHistory() {

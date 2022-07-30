@@ -22,7 +22,7 @@ object MobyBindingAdapter {
             view.setImageDrawable(
                 ResourcesCompat.getDrawable(
                     view.context.resources,
-                    R.drawable.img_def_movie,
+                    R.drawable.image_def_movie_thumb,
                     view.context.theme
                 )
             )

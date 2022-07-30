@@ -9,6 +9,12 @@ class RecyclerViewStatusUiTool(
     private val shimmerView: ShimmerFrameLayout,
     private val emptyView: View
 ) {
+    init {
+        recyclerView.visibility = View.INVISIBLE
+        shimmerView.visibility = View.INVISIBLE
+        emptyView.visibility = View.INVISIBLE
+    }
+
     fun setLoadingStatus() {
         recyclerView.visibility = View.INVISIBLE
         shimmerView.startShimmer()

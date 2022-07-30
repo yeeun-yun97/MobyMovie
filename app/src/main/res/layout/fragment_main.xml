@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewModel"
             type="com.github.yeeun_yun97.toy.mobymovie.viewModel.SearchViewModel" />
@@ -23,9 +25,23 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchEditText"
-            tools:listitem="@layout/item_movie">
+            tools:listitem="@layout/item_movie" />
 
-        </androidx.recyclerview.widget.RecyclerView>
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/resultListShimmer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/resultRecyclerView"
+            app:layout_constraintEnd_toEndOf="@+id/resultRecyclerView"
+            app:layout_constraintStart_toStartOf="@+id/resultRecyclerView"
+            app:layout_constraintTop_toTopOf="@+id/resultRecyclerView">
+
+            <include
+                layout="@layout/shimmer_movie_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <EditText
             android:id="@+id/searchEditText"

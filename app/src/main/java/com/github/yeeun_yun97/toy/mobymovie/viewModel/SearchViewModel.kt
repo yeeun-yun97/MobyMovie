@@ -18,6 +18,11 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     val historyList: LiveData<List<History>> = historyRepo.historyList
 
     /**
+     * viewModel의 keyword가 null이거나 empty인지 확인
+     */
+    fun isKeywordNullOrEmpty() = bindingKeyword.value.isNullOrEmpty()
+
+    /**
      * viewModel의 keyword를 history 테이블에 저장
      */
     fun saveKeywordToHistory() =

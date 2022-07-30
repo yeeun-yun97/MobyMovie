@@ -2,8 +2,8 @@ package com.github.yeeun_yun97.toy.mobymovie.ui.fragment
 
 import android.content.Intent
 import android.net.Uri
-import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,16 +12,26 @@ import com.github.yeeun_yun97.clone.ynmodule.ui.fragment.DataBindingBasicFragmen
 import com.github.yeeun_yun97.toy.mobymovie.R
 import com.github.yeeun_yun97.toy.mobymovie.databinding.FragmentMainBinding
 import com.github.yeeun_yun97.toy.mobymovie.ui.adapter.recycler.MovieRecyclerAdapter
+import com.github.yeeun_yun97.toy.mobymovie.ui.tool.RecyclerViewStatusUiTool
 import com.github.yeeun_yun97.toy.mobymovie.viewModel.SearchViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
     private val viewModel: SearchViewModel by activityViewModels()
     private var _loading = false
+    private lateinit var recyclerViewUiTool: RecyclerViewStatusUiTool
 
     override fun layoutId(): Int = R.layout.fragment_main
     override fun onCreateView() {
         binding.viewModel = viewModel
         initRecyclerView()
+        recyclerViewUiTool = RecyclerViewStatusUiTool(
+            binding.resultRecyclerView,
+            binding.resultListShimmer,
+            binding.emptyGroup
+        )
         binding.searchBtnImageView.setOnClickListener { searchStart() }
         binding.historyBtnImageView.setOnClickListener { navigateToHistory() }
     }
@@ -39,13 +49,19 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
             표시된 목록을 기준으로 계속 로드될 지,
             입력되어 있는 키워드를 기준으로 계속 로드될지가 모호하므로,
             키워드가 달라지면 목록을 없애기로 하였다.*/
-            if (adapter.itemCount != 0) adapter.setList(listOf())
+            if (adapter.itemCount != 0) {
+                recyclerViewUiTool.setEmptyStatus()
+                adapter.setList(listOf())
+            }
         }
         viewModel.movieList.observe(viewLifecycleOwner) {
-            binding.emptyGroup.visibility =
-                if (it.isNullOrEmpty()) View.VISIBLE
-                else View.GONE
-            adapter.setList(it)
+            lifecycleScope.launch(Dispatchers.Main){
+                adapter.setList(it)
+                delay(1200)
+
+                if(it.isNullOrEmpty()) recyclerViewUiTool.setEmptyStatus()
+                else recyclerViewUiTool.setLoadedStatus()
+            }
         }
         binding.resultRecyclerView.layoutManager = layoutManager
         binding.resultRecyclerView.adapter = adapter
@@ -70,8 +86,13 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
     }
 
     private fun searchStart() {
-        viewModel.saveKeywordToHistory()
-        viewModel.searchStart(::showInternetErrorDialog)
+        if (!viewModel.isKeywordNullOrEmpty()) {
+            recyclerViewUiTool.setLoadingStatus()
+            viewModel.saveKeywordToHistory()
+            viewModel.searchStart(::showInternetErrorDialog)
+        }else{
+            recyclerViewUiTool.setEmptyStatus()
+        }
     }
 
     private fun loadNext() {

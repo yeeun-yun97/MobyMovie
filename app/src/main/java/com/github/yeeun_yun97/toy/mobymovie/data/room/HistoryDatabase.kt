@@ -12,7 +12,7 @@ import com.github.yeeun_yun97.toy.mobymovie.data.model.History
 )
 abstract class HistoryDatabase : RoomDatabase() {
     companion object {
-        lateinit var db: HistoryDatabase
+        private lateinit var db: HistoryDatabase
         fun getInstance(applicationContext:Context): HistoryDatabase {
             if (!this::db.isInitialized) {
                 db = Room.databaseBuilder(

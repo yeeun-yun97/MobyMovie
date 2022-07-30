@@ -1,10 +1,12 @@
 package com.github.yeeun_yun97.toy.mobymovie.ui.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -30,6 +32,8 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
         override fun onEditorAction(p0: TextView?, actionId: Int, event: KeyEvent?): Boolean {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 searchStart()
+                val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(requireView().windowToken,0)//flag가 0이면 무조건 닫힌다.
                 return true
             }
             return false

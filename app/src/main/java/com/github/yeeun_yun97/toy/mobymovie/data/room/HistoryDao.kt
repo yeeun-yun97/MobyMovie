@@ -20,7 +20,7 @@ interface HistoryDao {
     @Query("DELETE FROM History WHERE keyword= :keyword")
     suspend fun deleteDuplicates(keyword: String)
 
-    @Query("DELETE FROM History WHERE hid =(SELECT hid FROM History ORDER BY hid LIMIT :limit)")
+    @Query("DELETE FROM History WHERE hid IN (SELECT hid FROM History ORDER BY hid LIMIT :limit)")
     suspend fun deleteOldsByLimit(limit:Int)
 
 

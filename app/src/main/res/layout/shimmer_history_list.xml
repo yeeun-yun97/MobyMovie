@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/fakeKeyword1"
+        style="@style/important3"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/fakeSplit1"
+        android:layout_width="0dp"
+        android:layout_height="0.8dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/light_light_gray"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/fakeKeyword1" />
+
+    <TextView
+        android:id="@+id/fakeKeyword2"
+        style="@style/important3"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/fakeSplit1" />
+
+    <View
+        android:id="@+id/fakeSplit2"
+        android:layout_width="0dp"
+        android:layout_height="0.8dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/light_light_gray"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/fakeKeyword2" />
+
+    <TextView
+        android:id="@+id/fakeKeyword3"
+        style="@style/important3"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/fakeSplit2" />
+
+    <View
+        android:id="@+id/fakeSplit3"
+        android:layout_width="0dp"
+        android:layout_height="0.8dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/light_light_gray"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/fakeKeyword3" />
+
+    <TextView
+        android:id="@+id/fakeKeyword4"
+        style="@style/important3"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/fakeSplit3" />
+
+    <View
+        android:id="@+id/fakeSplit4"
+        android:layout_width="0dp"
+        android:layout_height="0.8dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/light_light_gray"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/fakeKeyword4" />
+
+    <TextView
+        android:id="@+id/fakeKeyword5"
+        style="@style/important3"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/fakeSplit4" />
+
+    <View
+        android:id="@+id/fakeSplit5"
+        android:layout_width="0dp"
+        android:layout_height="0.8dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/light_light_gray"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/fakeKeyword5" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

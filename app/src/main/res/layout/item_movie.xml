@@ -29,12 +29,12 @@
 
         <TextView
             android:id="@+id/movieTimeTitleTextView"
-            style="@style/important3"
+            style="@style/text3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:singleLine="true"
-            android:text="@{item.movieTitle, default = 제목}"
+            app:htmlText="@{item.movieTitle}"
             app:layout_constraintBottom_toTopOf="@+id/movieDateTextView"
             app:layout_constraintEnd_toStartOf="@+id/endGuideline"
             app:layout_constraintStart_toStartOf="@+id/starIconImageView"

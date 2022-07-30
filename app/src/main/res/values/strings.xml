@@ -7,4 +7,7 @@
     <string name="historyKeywordDefault">키워드</string>
     <string name="movieDateDefault">2018</string>
     <string name="movieScoreDefault">10.0</string>
+    <string name="networkFailTitle">네트워크 실패</string>
+    <string name="networkFailMessage">데이터 로드에 실패하였습니다.</string>
+    <string name="networkFailTag">Internet Error</string>
 </resources>

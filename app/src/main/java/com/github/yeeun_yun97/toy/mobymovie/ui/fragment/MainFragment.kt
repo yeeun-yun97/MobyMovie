@@ -8,6 +8,7 @@ import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -32,8 +33,12 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
         override fun onEditorAction(p0: TextView?, actionId: Int, event: KeyEvent?): Boolean {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 searchStart()
-                val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.hideSoftInputFromWindow(requireView().windowToken,0)//flag가 0이면 무조건 닫힌다.
+                val inputMethodManager =
+                    requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(
+                    requireView().windowToken,
+                    0
+                )//flag가 0이면 무조건 닫힌다.
                 return true
             }
             return false
@@ -97,10 +102,10 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
 
     private fun showInternetErrorDialog(result: Int) {
         YnConfirmBaseDialogFragment(
-            "네트워크 실패 ($result)",
-            "데이터 로드에 실패하였습니다.",
+            "${getString(R.string.networkFailTitle)} ($result)",
+            getString(R.string.networkFailMessage),
             null
-        ).show(childFragmentManager, "InternetError")
+        ).show(childFragmentManager, getString(R.string.networkFailTag))
     }
 
     private fun searchStart() {

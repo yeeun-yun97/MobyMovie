@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">무비무비</string>
+    <string name="historyFragmentToolbarTitle">최근 검색 이력</string>
+    <string name="historyListEmptyMessage">최근에 검색한 키워드가 아직 없어요.</string>
+    <string name="inputKeywordMessage">검색어를 입력하세요</string>
+    <string name="movieListEmptyMessage">표시할 검색 결과가 아직 없어요.</string>
+    <string name="historyKeywordDefault">키워드</string>
+    <string name="movieDateDefault">2018</string>
+    <string name="movieScoreDefault">10.0</string>
 </resources>

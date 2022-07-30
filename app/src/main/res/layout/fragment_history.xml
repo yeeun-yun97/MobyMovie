@@ -14,7 +14,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:toolbarTitle="최근 검색 이력"></com.github.yeeun_yun97.clone.ynmodule.ui.component.CustomBasicToolbar>
+            app:toolbarTitle="@string/historyFragmentToolbarTitle" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/historyRecyclerView"
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="최근에 검색한 키워드가 아직 없어요."
+            android:text="@string/historyListEmptyMessage"
             app:layout_constraintBottom_toBottomOf="@+id/historyRecyclerView"
             app:layout_constraintEnd_toEndOf="@+id/emptyImageView"
             app:layout_constraintStart_toStartOf="@+id/emptyImageView"

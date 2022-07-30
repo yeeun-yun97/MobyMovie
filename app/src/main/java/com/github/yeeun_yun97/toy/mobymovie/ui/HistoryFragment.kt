@@ -1,6 +1,7 @@
 package com.github.yeeun_yun97.toy.mobymovie.ui
 
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,13 @@ class HistoryFragment : DataBindingBasicFragment<FragmentHistoryBinding>() {
 
     override fun onCreateView() {
         initRecyclerView()
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                navigateToHome()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
     }
 
     private fun initRecyclerView() {
@@ -32,8 +40,12 @@ class HistoryFragment : DataBindingBasicFragment<FragmentHistoryBinding>() {
         binding.historyRecyclerView.adapter = adapter
     }
 
+    private fun navigateToHome() {
+        findNavController().navigate(R.id.action_historyFragment_to_mainFragment)
+    }
+
     private fun navigateAndSearchStart(keyword: String) {
         viewModel.bindingKeyword.postValue(keyword)
-        findNavController().navigate(R.id.action_historyFragment_to_mainFragment)
+        navigateToHome()
     }
 }

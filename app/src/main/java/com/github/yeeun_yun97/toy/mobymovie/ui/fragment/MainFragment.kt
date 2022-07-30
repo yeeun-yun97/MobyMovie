@@ -3,12 +3,10 @@ package com.github.yeeun_yun97.toy.mobymovie.ui.fragment
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -29,6 +27,7 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
     private val viewModel: SearchViewModel by activityViewModels()
     private var _loading = false
     private lateinit var recyclerViewUiTool: RecyclerViewStatusUiTool
+    private var confirmDialog: YnConfirmBaseDialogFragment? = null
     private val onActionSearchListener = object : TextView.OnEditorActionListener {
         override fun onEditorAction(p0: TextView?, actionId: Int, event: KeyEvent?): Boolean {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -38,7 +37,7 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
                 inputMethodManager.hideSoftInputFromWindow(
                     requireView().windowToken,
                     0
-                )//flag가 0이면 무조건 닫힌다.
+                )//flag=0이면 무조건 닫힌다.
                 return true
             }
             return false
@@ -101,11 +100,19 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
     }
 
     private fun showInternetErrorDialog(result: Int) {
-        YnConfirmBaseDialogFragment(
+        val dialog = YnConfirmBaseDialogFragment(
             "${getString(R.string.networkFailTitle)} ($result)",
             getString(R.string.networkFailMessage),
-            null
-        ).show(childFragmentManager, getString(R.string.networkFailTag))
+            ::onCloseDialog
+        )
+        dialog.show(childFragmentManager, getString(R.string.networkFailTag))
+        dialog.isCancelable = false
+        this.confirmDialog = dialog
+    }
+
+    private fun onCloseDialog() {
+        this.confirmDialog?.dismiss()
+        this.confirmDialog = null
     }
 
     private fun searchStart() {

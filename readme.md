@@ -19,8 +19,7 @@ log
 
 ## 설명
 - Kotlin + MVVM + LiveData + (Retrofit, Room)
-( 과제 퀄리티 올리기! )
-- UI 더 깔끔하게 생각해보기
+- UI 깔끔하게 만들어보기
 - 데이터가 없을 때, 빈 화면을 보여주기보다, UI로 알려주기!
 - 로딩 시 shimmer로 사용자가 로딩중인지 아닌지 알기 쉽게 하기!
 - 최근 검색어 중복 제거하기, 최신순으로 보여주기
@@ -43,4 +42,5 @@ log
 - Shimmer
 
 ## ui 디자인
+- figma를 사용하여 먼저 ui를 그려본 후 구현하였습니다.
 https://www.figma.com/file/U0pLpUljDwN4e1BOo2n1Ca/MobyMoview?node-id=0%3A1

@@ -2,6 +2,9 @@ package com.github.yeeun_yun97.toy.mobymovie.ui.fragment
 
 import android.content.Intent
 import android.net.Uri
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -22,6 +25,15 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
     private val viewModel: SearchViewModel by activityViewModels()
     private var _loading = false
     private lateinit var recyclerViewUiTool: RecyclerViewStatusUiTool
+    private val onActionSearchListener = object : TextView.OnEditorActionListener {
+        override fun onEditorAction(p0: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                searchStart()
+                return true
+            }
+            return false
+        }
+    }
 
     override fun layoutId(): Int = R.layout.fragment_main
     override fun onCreateView() {
@@ -32,6 +44,7 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
             binding.resultListShimmer,
             binding.emptyGroup
         )
+        binding.searchEditText.setOnEditorActionListener(onActionSearchListener)
         binding.searchBtnImageView.setOnClickListener { searchStart() }
         binding.historyBtnImageView.setOnClickListener { navigateToHistory() }
     }
@@ -55,11 +68,11 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
             }
         }
         viewModel.movieList.observe(viewLifecycleOwner) {
-            lifecycleScope.launch(Dispatchers.Main){
+            lifecycleScope.launch(Dispatchers.Main) {
                 adapter.setList(it)
                 delay(1200)
 
-                if(it.isNullOrEmpty()) recyclerViewUiTool.setEmptyStatus()
+                if (it.isNullOrEmpty()) recyclerViewUiTool.setEmptyStatus()
                 else recyclerViewUiTool.setLoadedStatus()
             }
         }
@@ -90,7 +103,7 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
             recyclerViewUiTool.setLoadingStatus()
             viewModel.saveKeywordToHistory()
             viewModel.searchStart(::showInternetErrorDialog)
-        }else{
+        } else {
             recyclerViewUiTool.setEmptyStatus()
         }
     }

@@ -49,6 +49,7 @@
             android:layout_height="48dp"
             android:background="@drawable/bg_search_edit_text"
             android:ems="10"
+            android:imeOptions="actionSearch"
             android:hint="@string/inputKeywordMessage"
             android:inputType="text"
             android:paddingHorizontal="10dp"

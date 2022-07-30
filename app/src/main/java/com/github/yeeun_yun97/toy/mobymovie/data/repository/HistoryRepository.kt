@@ -6,9 +6,20 @@ import com.github.yeeun_yun97.toy.mobymovie.data.model.History
 import com.github.yeeun_yun97.toy.mobymovie.data.room.HistoryDao
 import com.github.yeeun_yun97.toy.mobymovie.data.room.HistoryDatabase
 
-class HistoryRepository(applicationContext: Context) {
+class HistoryRepository private constructor(applicationContext: Context) {
     private val _dao: HistoryDao = HistoryDatabase.getInstance(applicationContext).getDao()
     val historyList: LiveData<List<History>> get() = _dao.getHistories()
+
+    // set singleton
+    companion object {
+        private lateinit var repo: HistoryRepository
+        fun getInstance(applicationContext: Context): HistoryRepository {
+            if (!this::repo.isInitialized) {
+                repo = HistoryRepository(applicationContext)
+            }
+            return repo
+        }
+    }
 
     suspend fun insertHistory(keyword: String) {
         _dao.deleteDuplicates(keyword)

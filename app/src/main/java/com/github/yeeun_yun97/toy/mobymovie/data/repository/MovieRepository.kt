@@ -9,7 +9,7 @@ import com.github.yeeun_yun97.toy.mobymovie.data.model.NaverMovie
 import com.github.yeeun_yun97.toy.mobymovie.data.model.NaverSearchResponse
 import com.github.yeeun_yun97.toy.mobymovie.data.retrofit.NaverMovieService
 
-class MovieRepository {
+class MovieRepository private constructor() {
     private val _service = NaverMovieService.getInstance()
 
     private var _searchedResponse: MovieList? = null
@@ -20,13 +20,22 @@ class MovieRepository {
                 MutableLiveData(it.items)
             }
 
+    companion object {
+        private lateinit var _repo: MovieRepository
+        fun getInstance(): MovieRepository {
+            if (!this::_repo.isInitialized) {
+                _repo = MovieRepository()
+            }
+            return _repo
+        }
+    }
+
     private fun convertToMovieList(origin: NaverSearchResponse, keyword: String): MovieList {
         return MovieList(
             start = origin.start,
             total = origin.total,
             keyword = keyword,
             items = convertToMovieDataList(origin.items)
-
         )
     }
 

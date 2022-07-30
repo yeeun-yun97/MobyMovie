@@ -8,8 +8,8 @@ import com.github.yeeun_yun97.toy.mobymovie.data.repository.HistoryRepository
 import com.github.yeeun_yun97.toy.mobymovie.data.repository.MovieRepository
 
 class SearchViewModel(application: Application) : AndroidViewModel(application) {
-    private val _movieRepo = MovieRepository()
-    private val _historyRepo = HistoryRepository(application.applicationContext)
+    private val _movieRepo = MovieRepository.getInstance()
+    private val _historyRepo = HistoryRepository.getInstance(application.applicationContext)
 
     val bindingKeyword = MutableLiveData("")
     val bindingSearchedList: LiveData<List<MovieData>> = _movieRepo.searchedList

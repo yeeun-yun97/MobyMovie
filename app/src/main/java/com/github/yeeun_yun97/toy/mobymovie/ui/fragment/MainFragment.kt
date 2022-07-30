@@ -2,6 +2,7 @@ package com.github.yeeun_yun97.toy.mobymovie.ui.fragment
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -83,7 +84,7 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
                 super.onScrolled(recyclerView, dx, dy)
                 val scrolledPosition = layoutManager.findLastCompletelyVisibleItemPosition()
                 val isScrolledToEnd = scrolledPosition == adapter.itemCount - 1
-                if (!_loading && isScrolledToEnd) {
+                if (adapter.itemCount != 0 && !_loading && isScrolledToEnd) {
                     loadNext()
                 }
             }

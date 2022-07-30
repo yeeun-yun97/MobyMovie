@@ -11,6 +11,9 @@ interface HistoryDao {
     @Query("SELECT * FROM History ORDER BY hid desc")
     fun getHistories(): LiveData<List<History>>
 
+    @Query("SELECT count(*) FROM History")
+    suspend fun countHistory():Int
+
     @Insert
     suspend fun insertHistory(history: History): Long
 
@@ -20,6 +23,5 @@ interface HistoryDao {
     @Query("DELETE FROM History WHERE hid =(SELECT hid FROM History ORDER BY hid LIMIT :limit)")
     suspend fun deleteOldsByLimit(limit:Int)
 
-    @Query("SELECT count(*) FROM History")
-    suspend fun countHistory():Int
+
 }

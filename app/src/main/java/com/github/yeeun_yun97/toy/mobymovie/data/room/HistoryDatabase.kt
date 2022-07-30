@@ -11,8 +11,6 @@ import com.github.yeeun_yun97.toy.mobymovie.data.model.History
     entities = [History::class]
 )
 abstract class HistoryDatabase : RoomDatabase() {
-    abstract fun getDao(): HistoryDao
-
     companion object {
         lateinit var db: HistoryDatabase
         fun getInstance(applicationContext:Context): HistoryDatabase {
@@ -25,4 +23,8 @@ abstract class HistoryDatabase : RoomDatabase() {
             return db
         }
     }
+
+    abstract fun getDao(): HistoryDao
+
+
 }

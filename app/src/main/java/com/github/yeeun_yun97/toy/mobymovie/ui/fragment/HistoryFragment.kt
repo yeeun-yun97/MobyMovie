@@ -1,4 +1,4 @@
-package com.github.yeeun_yun97.toy.mobymovie.ui
+package com.github.yeeun_yun97.toy.mobymovie.ui.fragment
 
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -8,28 +8,31 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.yeeun_yun97.clone.ynmodule.ui.fragment.DataBindingBasicFragment
 import com.github.yeeun_yun97.toy.mobymovie.R
 import com.github.yeeun_yun97.toy.mobymovie.databinding.FragmentHistoryBinding
-import com.github.yeeun_yun97.toy.mobymovie.ui.adapter.HistoryRecyclerAdapter
+import com.github.yeeun_yun97.toy.mobymovie.ui.adapter.recycler.HistoryRecyclerAdapter
 import com.github.yeeun_yun97.toy.mobymovie.viewModel.SearchViewModel
 
 class HistoryFragment : DataBindingBasicFragment<FragmentHistoryBinding>() {
     private val viewModel: SearchViewModel by activityViewModels()
 
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() = navigateToHome()
+    }
+
     override fun layoutId(): Int = R.layout.fragment_history
 
     override fun onCreateView() {
         initRecyclerView()
+        setOnBackPressedCallback()
+    }
 
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                navigateToHome()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
+    private fun setOnBackPressedCallback() {
+        requireActivity().onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
 
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(context)
-        val adapter = HistoryRecyclerAdapter(::navigateAndSearchStart)
+        val adapter = HistoryRecyclerAdapter(::setKeywordAndNavigateToHome)
         viewModel.historyList.observe(viewLifecycleOwner) {
             binding.emptyGroup.visibility =
                 if (it.isNullOrEmpty()) View.VISIBLE
@@ -40,12 +43,14 @@ class HistoryFragment : DataBindingBasicFragment<FragmentHistoryBinding>() {
         binding.historyRecyclerView.adapter = adapter
     }
 
+    private fun setKeywordAndNavigateToHome(keyword: String) {
+        viewModel.bindingKeyword.postValue(keyword)
+        navigateToHome()
+    }
+
     private fun navigateToHome() {
         findNavController().navigate(R.id.action_historyFragment_to_mainFragment)
     }
 
-    private fun navigateAndSearchStart(keyword: String) {
-        viewModel.bindingKeyword.postValue(keyword)
-        navigateToHome()
-    }
+
 }

@@ -1,4 +1,4 @@
-package com.github.yeeun_yun97.toy.mobymovie.ui.adapter
+package com.github.yeeun_yun97.toy.mobymovie.ui.adapter.recycler
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,14 +18,15 @@ class MovieRecyclerAdapter(private val openOperation: (String) -> Unit) :
         val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MovieViewHolder(binding)
     }
+
+
 }
 
 class MovieViewHolder(binding: ItemMovieBinding) : YnBaseViewHolder<ItemMovieBinding>(binding) {
     fun setItem(item: MovieData, openOperation: (String) -> Unit) {
         binding.item = item
-        binding.root.setOnClickListener {
-            openOperation(item.movieUrl)
-            Log.d("링크", item.movieUrl)
-        }
+        binding.root.setOnClickListener { openOperation(item.movieUrl) }
     }
+
+
 }

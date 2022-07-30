@@ -1,4 +1,4 @@
-package com.github.yeeun_yun97.toy.mobymovie.ui
+package com.github.yeeun_yun97.toy.mobymovie.ui.fragment
 
 import android.content.Intent
 import android.net.Uri
@@ -12,7 +12,7 @@ import com.github.yeeun_yun97.clone.ynmodule.ui.component.YnConfirmBaseDialogFra
 import com.github.yeeun_yun97.clone.ynmodule.ui.fragment.DataBindingBasicFragment
 import com.github.yeeun_yun97.toy.mobymovie.R
 import com.github.yeeun_yun97.toy.mobymovie.databinding.FragmentMainBinding
-import com.github.yeeun_yun97.toy.mobymovie.ui.adapter.MovieRecyclerAdapter
+import com.github.yeeun_yun97.toy.mobymovie.ui.adapter.recycler.MovieRecyclerAdapter
 import com.github.yeeun_yun97.toy.mobymovie.viewModel.SearchViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
     private val viewModel: SearchViewModel by activityViewModels()
-    private var loading = false
+    private var _loading = false
 
     override fun layoutId(): Int = R.layout.fragment_main
     override fun onCreateView() {
@@ -42,10 +42,10 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
             /* 스크롤 시 계속 로드하는 기능을 넣고자 하는데,
             표시된 목록을 기준으로 계속 로드될 지,
             입력되어 있는 키워드를 기준으로 계속 로드될지가 모호하므로,
-            키워드가 달라지면 목록을 없애보았다.*/
+            키워드가 달라지면 목록을 없애기로 하였다.*/
             if (adapter.itemCount != 0) adapter.setList(listOf())
         }
-        viewModel.bindingSearchedList.observe(viewLifecycleOwner) {
+        viewModel.movieList.observe(viewLifecycleOwner) {
             binding.emptyGroup.visibility =
                 if (it.isNullOrEmpty()) View.VISIBLE
                 else View.GONE
@@ -53,11 +53,12 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
         }
         binding.resultRecyclerView.layoutManager = layoutManager
         binding.resultRecyclerView.adapter = adapter
-
         binding.resultRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!loading && layoutManager.findLastCompletelyVisibleItemPosition() == adapter.itemCount - 1) {
+                val scrolledPosition = layoutManager.findLastCompletelyVisibleItemPosition()
+                val isScrolledToEnd = scrolledPosition == adapter.itemCount - 1
+                if (!_loading && isScrolledToEnd) {
                     loadNext()
                 }
             }
@@ -82,12 +83,12 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
     }
 
     private fun loadNext() {
-        loading = true
+        _loading = true
         lifecycleScope.launch(Dispatchers.IO) {
             val result = async { viewModel.loadMore() }.await()
             if (result != 200 && result != -1)
                 showInternetErrorDialog(result)
-            loading = false
+            _loading = false
         }
     }
 

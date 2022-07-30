@@ -8,7 +8,6 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
 
-
 interface NaverMovieService {
     companion object {
         private const val BASE_URL = "https://openapi.naver.com/"
@@ -26,16 +25,12 @@ interface NaverMovieService {
         }
     }
 
-    @Headers(
-        "X-Naver-Client-Id:RohV421ZcW0SdOPby2ZY",
-        "X-Naver-Client-Secret:PuH87jAjJP"
-    )
+    @Headers("X-Naver-Client-Id:RohV421ZcW0SdOPby2ZY", "X-Naver-Client-Secret:PuH87jAjJP")
     @GET("/v1/search/movie.json")
     suspend fun searchMovie(
         @Query("query", encoded = true) query: String,
         @Query("start", encoded = true) start: Int,
         @Query("display", encoded = true) display: Int = 20,
-
     ): Response<NaverSearchResponse>
 
 

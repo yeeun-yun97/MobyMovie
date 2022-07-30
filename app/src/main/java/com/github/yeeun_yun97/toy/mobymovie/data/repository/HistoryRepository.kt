@@ -7,10 +7,9 @@ import com.github.yeeun_yun97.toy.mobymovie.data.room.HistoryDao
 import com.github.yeeun_yun97.toy.mobymovie.data.room.HistoryDatabase
 
 class HistoryRepository private constructor(applicationContext: Context) {
-    private val _dao: HistoryDao = HistoryDatabase.getInstance(applicationContext).getDao()
-    val historyList: LiveData<List<History>> get() = _dao.getHistories()
+    private val dao: HistoryDao = HistoryDatabase.getInstance(applicationContext).getDao()
+    val historyList: LiveData<List<History>> get() = dao.getHistories()
 
-    // set singleton
     companion object {
         private lateinit var repo: HistoryRepository
         fun getInstance(applicationContext: Context): HistoryRepository {
@@ -21,13 +20,18 @@ class HistoryRepository private constructor(applicationContext: Context) {
         }
     }
 
+    /**
+     * 키워드를 History Table에 저장함.
+     * @param keyword 저장할 키워드
+     */
     suspend fun insertHistory(keyword: String) {
-        _dao.deleteDuplicates(keyword)
-        _dao.insertHistory(History(keyword = keyword))
+        dao.deleteDuplicates(keyword) //같은 값을 여러 번 저장할 필요 없음.
+        dao.insertHistory(History(keyword = keyword))
 
-        val count = _dao.countHistory()
-        if (count > 10) {
-            _dao.deleteOldsByLimit(count - 10)
-        }
+        //레코드 개수 제한, 제일 오래된 것부터 지운다.
+        val count = dao.countHistory()
+        if (count > 10) dao.deleteOldsByLimit(count - 10)
     }
+
+
 }

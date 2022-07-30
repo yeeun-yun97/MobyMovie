@@ -1,4 +1,4 @@
-package com.github.yeeun_yun97.toy.mobymovie.ui.adapter
+package com.github.yeeun_yun97.toy.mobymovie.ui.adapter.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,8 +18,9 @@ class HistoryRecyclerAdapter(
         val binding = ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return HistoryViewHolder(binding)
     }
-}
 
+
+}
 
 class HistoryViewHolder(binding: ItemHistoryBinding) :
     YnBaseViewHolder<ItemHistoryBinding>(binding) {
@@ -27,4 +28,6 @@ class HistoryViewHolder(binding: ItemHistoryBinding) :
         binding.keyword = item.keyword
         binding.root.setOnClickListener { searchOperation(item.keyword) }
     }
+
+
 }

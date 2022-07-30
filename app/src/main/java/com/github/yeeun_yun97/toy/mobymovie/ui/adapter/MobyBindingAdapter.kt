@@ -36,4 +36,5 @@ object MobyBindingAdapter {
         view.setText(text)
     }
 
+
 }

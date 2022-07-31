@@ -1,18 +1,23 @@
 package com.github.yeeun_yun97.toy.mobymovie.ui.fragment
 
-import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.yeeun_yun97.clone.ynmodule.ui.fragment.DataBindingBasicFragment
 import com.github.yeeun_yun97.toy.mobymovie.R
 import com.github.yeeun_yun97.toy.mobymovie.databinding.FragmentHistoryBinding
 import com.github.yeeun_yun97.toy.mobymovie.ui.adapter.recycler.HistoryRecyclerAdapter
+import com.github.yeeun_yun97.toy.mobymovie.ui.tool.RecyclerViewStatusUiTool
 import com.github.yeeun_yun97.toy.mobymovie.viewModel.SearchViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class HistoryFragment : DataBindingBasicFragment<FragmentHistoryBinding>() {
     private val viewModel: SearchViewModel by activityViewModels()
+    private lateinit var recyclerViewUiTool: RecyclerViewStatusUiTool
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() = navigateToHome()
@@ -23,6 +28,11 @@ class HistoryFragment : DataBindingBasicFragment<FragmentHistoryBinding>() {
     override fun onCreateView() {
         initRecyclerView()
         setOnBackPressedCallback()
+        recyclerViewUiTool = RecyclerViewStatusUiTool(
+            binding.historyRecyclerView,
+            binding.historyListShimmer,
+            binding.emptyGroup
+        )
     }
 
     private fun setOnBackPressedCallback() {
@@ -30,14 +40,23 @@ class HistoryFragment : DataBindingBasicFragment<FragmentHistoryBinding>() {
             .addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
 
+    override fun onStart() {
+        super.onStart()
+        recyclerViewUiTool.setLoadingStatus()
+    }
+
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(context)
         val adapter = HistoryRecyclerAdapter(::setKeywordAndNavigateToHome)
         viewModel.historyList.observe(viewLifecycleOwner) {
-            binding.emptyGroup.visibility =
-                if (it.isNullOrEmpty()) View.VISIBLE
-                else View.GONE
-            adapter.setList(it)
+            lifecycleScope.launch(Dispatchers.Main) {
+                adapter.setList(it)
+                delay(1200) // wait for recyclerView set items
+                if (it.isNullOrEmpty())
+                    recyclerViewUiTool.setEmptyStatus()
+                else
+                    recyclerViewUiTool.setLoadedStatus()
+            }
         }
         binding.historyRecyclerView.layoutManager = layoutManager
         binding.historyRecyclerView.adapter = adapter

@@ -11,8 +11,8 @@ android {
         applicationId "com.github.yeeun_yun97.toy.mobymovie"
         minSdk 28
         targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,6 +37,9 @@ android {
 
 
 dependencies {
+    //shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
     //glide
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'

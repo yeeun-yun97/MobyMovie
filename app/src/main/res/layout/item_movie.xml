@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.github.yeeun_yun97.toy.mobymovie.data.model.MovieData" />
@@ -20,11 +21,10 @@
             app:imageUrl="@{item.movieThumbnail}"
             app:layout_constraintBottom_toTopOf="@+id/bottomGuideline"
             app:layout_constraintEnd_toStartOf="@id/starIconImageView"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@+id/startGuideline"
             app:layout_constraintTop_toTopOf="@+id/topGuideline"
-            app:layout_constraintVertical_bias="0.0"
-            tools:layout_constraintHorizontal_bias="0"
             tools:srcCompat="@drawable/image_def_movie_thumb" />
 
         <TextView

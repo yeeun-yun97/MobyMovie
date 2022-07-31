@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/fakeMovieThumbnail_1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/image_def_movie_thumb"
+        android:backgroundTint="@color/light_gray"
+        app:layout_constraintEnd_toStartOf="@id/fakeStarIcon_1"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fakeMovieTitle_1"
+        style="@style/text3"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_shimmer"
+        android:singleLine="true"
+        app:layout_constraintBottom_toTopOf="@id/fakeMovieDate_1"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/fakeStarIcon_1"
+        app:layout_constraintTop_toBottomOf="@id/fakeStarIcon_1" />
+
+    <TextView
+        android:id="@+id/fakeMovieDate_1"
+        android:layout_width="60dp"
+        android:layout_height="14dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintBottom_toBottomOf="@id/fakeMovieThumbnail_1"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/fakeMovieTitle_1"
+        app:layout_constraintTop_toBottomOf="@id/fakeMovieTitle_1" />
+
+    <TextView
+        android:id="@+id/fakeMovieScore_1"
+        android:layout_width="40dp"
+        android:layout_height="14dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintBottom_toBottomOf="@id/fakeStarIcon_1"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/fakeStarIcon_1"
+        app:layout_constraintTop_toTopOf="@id/fakeStarIcon_1" />
+
+    <ImageView
+        android:id="@+id/fakeStarIcon_1"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/icon_star"
+        android:backgroundTint="@color/light_gray"
+        app:layout_constraintBottom_toTopOf="@id/fakeMovieTitle_1"
+        app:layout_constraintEnd_toStartOf="@id/fakeMovieScore_1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@id/fakeMovieThumbnail_1"
+        app:layout_constraintTop_toTopOf="@id/fakeMovieThumbnail_1"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <ImageView
+        android:id="@+id/fakeMovieThumbnail_2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/image_def_movie_thumb"
+        android:backgroundTint="@color/light_gray"
+        app:layout_constraintEnd_toStartOf="@id/fakeStarIcon_2"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/fakeMovieThumbnail_1" />
+
+    <TextView
+        android:id="@+id/fakeMovieTitle_2"
+        style="@style/text3"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_shimmer"
+        android:singleLine="true"
+        app:layout_constraintBottom_toTopOf="@id/fakeMovieDate_2"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/fakeStarIcon_2"
+        app:layout_constraintTop_toBottomOf="@id/fakeStarIcon_2" />
+
+    <TextView
+        android:id="@+id/fakeMovieDate_2"
+        android:layout_width="60dp"
+        android:layout_height="14dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintBottom_toBottomOf="@id/fakeMovieThumbnail_2"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/fakeMovieTitle_2"
+        app:layout_constraintTop_toBottomOf="@id/fakeMovieTitle_2" />
+
+    <TextView
+        android:id="@+id/fakeMovieScore_2"
+        android:layout_width="40dp"
+        android:layout_height="14dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintBottom_toBottomOf="@id/fakeStarIcon_2"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/fakeStarIcon_2"
+        app:layout_constraintTop_toTopOf="@id/fakeStarIcon_2" />
+
+    <ImageView
+        android:id="@+id/fakeStarIcon_2"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/icon_star"
+        android:backgroundTint="@color/light_gray"
+        app:layout_constraintBottom_toTopOf="@id/fakeMovieTitle_2"
+        app:layout_constraintEnd_toStartOf="@id/fakeMovieScore_2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@id/fakeMovieThumbnail_2"
+        app:layout_constraintTop_toTopOf="@id/fakeMovieThumbnail_2"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <ImageView
+        android:id="@+id/fakeMovieThumbnail_3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/image_def_movie_thumb"
+        android:backgroundTint="@color/light_gray"
+        app:layout_constraintEnd_toStartOf="@id/fakeStarIcon_3"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/fakeMovieThumbnail_2" />
+
+    <TextView
+        android:id="@+id/fakeMovieTitle_3"
+        style="@style/text3"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_shimmer"
+        android:singleLine="true"
+        app:layout_constraintBottom_toTopOf="@id/fakeMovieDate_3"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/fakeStarIcon_3"
+        app:layout_constraintTop_toBottomOf="@id/fakeStarIcon_3" />
+
+    <TextView
+        android:id="@+id/fakeMovieDate_3"
+        android:layout_width="60dp"
+        android:layout_height="14dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintBottom_toBottomOf="@id/fakeMovieThumbnail_3"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/fakeMovieTitle_3"
+        app:layout_constraintTop_toBottomOf="@id/fakeMovieTitle_3" />
+
+    <TextView
+        android:id="@+id/fakeMovieScore_3"
+        android:layout_width="40dp"
+        android:layout_height="14dp"
+        android:background="@drawable/bg_shimmer"
+        app:layout_constraintBottom_toBottomOf="@id/fakeStarIcon_3"
+        app:layout_constraintEnd_toStartOf="@id/endGuideline"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/fakeStarIcon_3"
+        app:layout_constraintTop_toTopOf="@id/fakeStarIcon_3" />
+
+    <ImageView
+        android:id="@+id/fakeStarIcon_3"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/icon_star"
+        android:backgroundTint="@color/light_gray"
+        app:layout_constraintBottom_toTopOf="@id/fakeMovieTitle_3"
+        app:layout_constraintEnd_toStartOf="@id/fakeMovieScore_3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@id/fakeMovieThumbnail_3"
+        app:layout_constraintTop_toTopOf="@id/fakeMovieThumbnail_3"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="15dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="15dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

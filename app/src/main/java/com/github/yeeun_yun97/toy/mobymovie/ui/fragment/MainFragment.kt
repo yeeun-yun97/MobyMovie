@@ -1,9 +1,14 @@
 package com.github.yeeun_yun97.toy.mobymovie.ui.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.view.View
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,16 +17,43 @@ import com.github.yeeun_yun97.clone.ynmodule.ui.fragment.DataBindingBasicFragmen
 import com.github.yeeun_yun97.toy.mobymovie.R
 import com.github.yeeun_yun97.toy.mobymovie.databinding.FragmentMainBinding
 import com.github.yeeun_yun97.toy.mobymovie.ui.adapter.recycler.MovieRecyclerAdapter
+import com.github.yeeun_yun97.toy.mobymovie.ui.tool.RecyclerViewStatusUiTool
 import com.github.yeeun_yun97.toy.mobymovie.viewModel.SearchViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
     private val viewModel: SearchViewModel by activityViewModels()
     private var _loading = false
+    private lateinit var recyclerViewUiTool: RecyclerViewStatusUiTool
+    private var confirmDialog: YnConfirmBaseDialogFragment? = null
+    private val onActionSearchListener = object : TextView.OnEditorActionListener {
+        override fun onEditorAction(p0: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                searchStart()
+                val inputMethodManager =
+                    requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(
+                    requireView().windowToken,
+                    0
+                )//flag=0이면 무조건 닫힌다.
+                return true
+            }
+            return false
+        }
+    }
 
     override fun layoutId(): Int = R.layout.fragment_main
     override fun onCreateView() {
         binding.viewModel = viewModel
         initRecyclerView()
+        recyclerViewUiTool = RecyclerViewStatusUiTool(
+            binding.resultRecyclerView,
+            binding.resultListShimmer,
+            binding.emptyGroup
+        )
+        binding.searchEditText.setOnEditorActionListener(onActionSearchListener)
         binding.searchBtnImageView.setOnClickListener { searchStart() }
         binding.historyBtnImageView.setOnClickListener { navigateToHistory() }
     }
@@ -39,13 +71,19 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
             표시된 목록을 기준으로 계속 로드될 지,
             입력되어 있는 키워드를 기준으로 계속 로드될지가 모호하므로,
             키워드가 달라지면 목록을 없애기로 하였다.*/
-            if (adapter.itemCount != 0) adapter.setList(listOf())
+            if (adapter.itemCount != 0) {
+                recyclerViewUiTool.setEmptyStatus()
+                adapter.setList(listOf())
+            }
         }
         viewModel.movieList.observe(viewLifecycleOwner) {
-            binding.emptyGroup.visibility =
-                if (it.isNullOrEmpty()) View.VISIBLE
-                else View.GONE
-            adapter.setList(it)
+            lifecycleScope.launch(Dispatchers.Main) {
+                adapter.setList(it)
+                delay(1200)
+
+                if (it.isNullOrEmpty()) recyclerViewUiTool.setEmptyStatus()
+                else recyclerViewUiTool.setLoadedStatus()
+            }
         }
         binding.resultRecyclerView.layoutManager = layoutManager
         binding.resultRecyclerView.adapter = adapter
@@ -54,7 +92,7 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
                 super.onScrolled(recyclerView, dx, dy)
                 val scrolledPosition = layoutManager.findLastCompletelyVisibleItemPosition()
                 val isScrolledToEnd = scrolledPosition == adapter.itemCount - 1
-                if (!_loading && isScrolledToEnd) {
+                if (adapter.itemCount != 0 && !_loading && isScrolledToEnd) {
                     loadNext()
                 }
             }
@@ -62,16 +100,29 @@ class MainFragment : DataBindingBasicFragment<FragmentMainBinding>() {
     }
 
     private fun showInternetErrorDialog(result: Int) {
-        YnConfirmBaseDialogFragment(
-            "네트워크 실패 ($result)",
-            "데이터 로드에 실패하였습니다.",
-            null
-        ).show(childFragmentManager, "InternetError")
+        val dialog = YnConfirmBaseDialogFragment(
+            "${getString(R.string.networkFailTitle)} ($result)",
+            getString(R.string.networkFailMessage),
+            ::onCloseDialog
+        )
+        dialog.show(childFragmentManager, getString(R.string.networkFailTag))
+        dialog.isCancelable = false
+        this.confirmDialog = dialog
+    }
+
+    private fun onCloseDialog() {
+        this.confirmDialog?.dismiss()
+        this.confirmDialog = null
     }
 
     private fun searchStart() {
-        viewModel.saveKeywordToHistory()
-        viewModel.searchStart(::showInternetErrorDialog)
+        if (!viewModel.isKeywordNullOrEmpty()) {
+            recyclerViewUiTool.setLoadingStatus()
+            viewModel.saveKeywordToHistory()
+            viewModel.searchStart(::showInternetErrorDialog)
+        } else {
+            recyclerViewUiTool.setEmptyStatus()
+        }
     }
 
     private fun loadNext() {

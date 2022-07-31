@@ -25,7 +25,6 @@ class HistoryRepository private constructor(applicationContext: Context) {
      * @param keyword 저장할 키워드
      */
     suspend fun insertHistory(keyword: String) {
-        dao.deleteDuplicates(keyword) //같은 값을 여러 번 저장할 필요 없음.
         dao.insertHistory(History(keyword = keyword))
 
         //레코드 개수 제한, 제일 오래된 것부터 지운다.

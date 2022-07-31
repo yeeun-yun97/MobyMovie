@@ -12,8 +12,8 @@ import com.github.yeeun_yun97.toy.mobymovie.data.model.History
 )
 abstract class HistoryDatabase : RoomDatabase() {
     companion object {
-        lateinit var db: HistoryDatabase
-        fun getInstance(applicationContext:Context): HistoryDatabase {
+        private lateinit var db: HistoryDatabase
+        fun getInstance(applicationContext: Context): HistoryDatabase {
             if (!this::db.isInitialized) {
                 db = Room.databaseBuilder(
                     applicationContext,
@@ -21,6 +21,11 @@ abstract class HistoryDatabase : RoomDatabase() {
                 ).build()
             }
             return db
+        }
+
+        fun createInstanceForTest(applicationContext: Context) {
+            db = Room.inMemoryDatabaseBuilder(applicationContext, HistoryDatabase::class.java)
+                .build()
         }
     }
 

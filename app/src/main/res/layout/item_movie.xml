@@ -72,7 +72,8 @@
             app:layout_constraintStart_toEndOf="@+id/movieThumbnailImageView"
             app:layout_constraintTop_toTopOf="@+id/movieThumbnailImageView"
             app:layout_constraintVertical_chainStyle="packed"
-            app:srcCompat="@drawable/icon_star" />
+            app:srcCompat="@drawable/icon_star"
+            app:tint="?attr/colorOnBackground" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottomGuideline"

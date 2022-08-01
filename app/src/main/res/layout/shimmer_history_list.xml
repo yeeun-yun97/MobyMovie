@@ -21,7 +21,7 @@
         android:layout_width="0dp"
         android:layout_height="0.8dp"
         android:layout_marginTop="20dp"
-        android:background="@color/light_light_gray"
+        android:background="?attr/colorSurfaceVariant"
         app:layout_constraintEnd_toStartOf="@id/endGuideline"
         app:layout_constraintStart_toStartOf="@id/startGuideline"
         app:layout_constraintTop_toBottomOf="@id/fakeKeyword1" />
@@ -43,7 +43,7 @@
         android:layout_width="0dp"
         android:layout_height="0.8dp"
         android:layout_marginTop="20dp"
-        android:background="@color/light_light_gray"
+        android:background="?attr/colorSurfaceVariant"
         app:layout_constraintEnd_toStartOf="@id/endGuideline"
         app:layout_constraintStart_toStartOf="@id/startGuideline"
         app:layout_constraintTop_toBottomOf="@id/fakeKeyword2" />
@@ -65,7 +65,7 @@
         android:layout_width="0dp"
         android:layout_height="0.8dp"
         android:layout_marginTop="20dp"
-        android:background="@color/light_light_gray"
+        android:background="?attr/colorSurfaceVariant"
         app:layout_constraintEnd_toStartOf="@id/endGuideline"
         app:layout_constraintStart_toStartOf="@id/startGuideline"
         app:layout_constraintTop_toBottomOf="@id/fakeKeyword3" />
@@ -87,7 +87,7 @@
         android:layout_width="0dp"
         android:layout_height="0.8dp"
         android:layout_marginTop="20dp"
-        android:background="@color/light_light_gray"
+        android:background="?attr/colorSurfaceVariant"
         app:layout_constraintEnd_toStartOf="@id/endGuideline"
         app:layout_constraintStart_toStartOf="@id/startGuideline"
         app:layout_constraintTop_toBottomOf="@id/fakeKeyword4" />
@@ -109,7 +109,7 @@
         android:layout_width="0dp"
         android:layout_height="0.8dp"
         android:layout_marginTop="20dp"
-        android:background="@color/light_light_gray"
+        android:background="?attr/colorSurfaceVariant"
         app:layout_constraintEnd_toStartOf="@id/endGuideline"
         app:layout_constraintStart_toStartOf="@id/startGuideline"
         app:layout_constraintTop_toBottomOf="@id/fakeKeyword5" />

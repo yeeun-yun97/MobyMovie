@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.github.yeeun_yun97.toy.mobymovie.viewModel.SearchViewModel" />
@@ -50,6 +49,10 @@
             android:background="@drawable/bg_search_edit_text"
             android:ems="10"
             android:imeOptions="actionSearch"
+
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textColorHint="?attr/colorOnSurfaceVariant"
+
             android:hint="@string/inputKeywordMessage"
             android:inputType="text"
             android:paddingHorizontal="10dp"
@@ -70,7 +73,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/searchBtnImageView"
             app:layout_constraintTop_toTopOf="@+id/searchBtnImageView"
-            app:srcCompat="@drawable/icon_history" />
+            app:srcCompat="@drawable/icon_history"
+            app:tint="?attr/colorOnBackground" />
 
         <ImageView
             android:id="@+id/searchBtnImageView"
@@ -82,7 +86,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/searchEditText"
             app:layout_constraintTop_toTopOf="@+id/searchEditText"
-            app:srcCompat="@drawable/icon_search" />
+            app:srcCompat="@drawable/icon_search"
+            app:tint="?attr/colorOnBackground" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/emptyGroup"

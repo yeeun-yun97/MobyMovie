@@ -11,7 +11,7 @@
         <item name="colorSecondaryVariant">@color/light_light_gray</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -26,7 +26,10 @@
         <item name="colorSecondaryVariant">@color/light_light_gray</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+a
         <!-- Customize your theme here. -->
+        <item name="colorSurfaceVariant">@color/light_gray</item>
+        <item name="colorOnSurfaceVariant">@color/_gray</item>
     </style>
 </resources>
